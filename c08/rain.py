@@ -32,11 +32,12 @@ class Particle():
 
 class ParticleTrail():
 
-    def __init__(self, pos, size, life):
+    def __init__(self, pos, size, life, color):
         self.pos = pos
         self.size = size
         self.life = life
-        #pass color into particle trail function
+        #pass color into particle trail
+        self.color = color
         self.particles = []
 
     def update(self, dt):
