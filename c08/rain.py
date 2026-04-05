@@ -36,7 +36,7 @@ class ParticleTrail():
         self.pos = pos
         self.size = size
         self.life = life
-        #pass color into particle trail
+        #pass color into particle trail function
         self.particles = []
 
     def update(self, dt):
