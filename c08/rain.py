@@ -3,10 +3,10 @@ import pygame
 
 class Particle():
      
-    def __init__(self, pos=(0, 0), size=15, life=1000):
+    def __init__(self, pos=(0, 0), size=15, life=1000, color=(0, 255, 0)):
         self.pos = pos
         self.size = size
-        self.color = pygame.Color(0, 255, 0)
+        self.color = pygame.Color(color)
         self.age = 0 # in miliseconds
         self.life = life
         self.dead = False
@@ -18,6 +18,7 @@ class Particle():
         if self.age > self.life:
             self.dead = True
         self.alpha = 255 * (1 - (self.age / self.life))
+        
 
     def update_surface(self):
         surf = pygame.Surface((self.size*0.8, self.size*0.8))
@@ -35,10 +36,12 @@ class ParticleTrail():
         self.pos = pos
         self.size = size
         self.life = life
+        #pass color into particle trail
         self.particles = []
 
     def update(self, dt):
-        particle = Particle(self.pos, size=self.size, life=self.life)
+        #update color of particle
+        particle = Particle(self.pos, size=self.size, life=self.life, color=self.color)
         self.particles.insert(0, particle)
         self._update_particles(dt)
         self._update_pos()
@@ -78,6 +81,9 @@ class Rain():
 
 
     def _trail_is_offscreen(self, trail):
+    # If there are no particles, consider the trail offscreen
+        if not trail.particles:
+            return True
         tail_is_offscreen = trail.particles[-1].pos[1] > self.screen_res[1]
         return tail_is_offscreen
     
@@ -88,6 +94,8 @@ class Rain():
             x = random.randrange(0, screen_Wdith, self.particle_size)
             pos = (x, 0)
             life = random.randrange(500, 3000)
+            #import color indez
+            #color of the trails alternate
             trail = ParticleTrail(pos, self.particle_size, life)
             self.trails.insert(0, trail)
 
@@ -103,8 +111,8 @@ def main():
         pygame.display.set_caption("Digital Rain")
         clock = pygame.time.Clock()
         dt = 0    
-        resolution = (800, 600)
-        screen = pygame.display.set_mode(resolution)
+        resolution = (1920, 1080)
+        screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
         rain = Rain(resolution)
         running = True
         while running: 
