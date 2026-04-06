@@ -3,13 +3,15 @@ import pygame
 
 class Particle():
      
-    def __init__(self, pos=(0, 0), size=15, life=1000, color=(0, 255, 0)):
+    def __init__(self, pos=(0, 0), size=15, life=1000, color=(0, 255, 0), shape="square"):
         self.pos = pos
         self.size = size
         self.color = pygame.Color(color)
         self.age = 0 # in miliseconds
         self.life = life
         self.dead = False
+        #include shape parameter to enable additional shapes
+        self.shape = shape
         self.alpha = 255
         self.surface = self.update_surface()
 
@@ -21,8 +23,17 @@ class Particle():
         
 
     def update_surface(self):
-        surf = pygame.Surface((self.size*0.8, self.size*0.8))
-        surf.fill(self.color)
+        size = int(self.size)
+
+        surf = pygame.Surface((int(size * 0.8), int(size * 0.8)), pygame.SRCALPHA)
+
+        if self.shape == "square":
+            pygame.draw.rect(surf, self.color, (0, 0, size, size))
+
+        elif self.shape == "circle":
+            pygame.draw.circle(surf, self.color, (size//2, size//2), size//2)
+
+
         return surf
         
     def draw(self, surface):
@@ -32,13 +43,18 @@ class Particle():
 
 class ParticleTrail():
 
-    def __init__(self, pos, size, life, color):
+    def __init__(self, pos, size, life, color, shapes):
+
+        shapes = ["square", "circle"]
+        particle = Particle
         self.pos = pos
         self.size = size
         self.life = life
         #pass color into particle trail
         self.color = color
+        shape = random.choice(shapes)
         self.particles = []
+        
 
     def update(self, dt):
         #update color of particle
@@ -95,9 +111,18 @@ class Rain():
             x = random.randrange(0, screen_Wdith, self.particle_size)
             pos = (x, 0)
             life = random.randrange(500, 3000)
-            #import color indez
+            #import color index
+            color = [
+            (255, 0, 0),
+            (0, 255, 0),
+            (0, 0, 255),
+            (255, 255, 0),
+            (255, 0, 255),
+            ]
             #color of the trails alternate
-            trail = ParticleTrail(pos, self.particle_size, life)
+            shapes = ["square", "circle"]
+            color = random.choice(color)
+            trail = ParticleTrail(pos, self.particle_size, life, color, shapes)
             self.trails.insert(0, trail)
 
 
