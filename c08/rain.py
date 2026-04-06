@@ -52,13 +52,14 @@ class ParticleTrail():
         self.life = life
         #pass color into particle trail
         self.color = color
-        shape = random.choice(shapes)
+        self.shapes = shapes
         self.particles = []
         
 
     def update(self, dt):
         #update color of particle
-        particle = Particle(self.pos, size=self.size, life=self.life, color=self.color)
+        particle = Particle(self.pos, size=self.size, life=self.life, color=self.color,
+        shape=random.choice(self.shapes))
         self.particles.insert(0, particle)
         self._update_particles(dt)
         self._update_pos()
