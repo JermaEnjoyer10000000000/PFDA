@@ -149,8 +149,9 @@ def main():
                     running = False
             #Render and display stuff
             rain.update(dt)
-            black = pygame.Color(0, 0, 0)
-            screen.fill(black)
+            #background color variable
+            bg_color = pygame.Color(0, 0, 0)
+            screen.fill(bg_color)
             rain.draw(screen)
             pygame.display.flip()
             dt = clock.tick(12)
