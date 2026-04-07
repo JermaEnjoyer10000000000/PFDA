@@ -139,9 +139,10 @@ def main():
         clock = pygame.time.Clock()
         dt = 0    
         resolution = (1920, 1080)
-        screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
+        screen = pygame.display.set_mode(resolution)
         rain = Rain(resolution)
         running = True
+        bg_color = pygame.Color(0, 0, 0)
         while running: 
             #Event Loop
             for event in pygame.event.get():
@@ -151,15 +152,20 @@ def main():
                 #create if statement that changes background color
                 #background color changed via user input
                 #elif statement for different background colors tied to different input
+                elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_1:
+                            bg_color = pygame.Color(0, 0, 0)
+                        elif event.key == pygame.K_2:
 
-            #Render and display stuff
-            rain.update(dt)
-            #background color variable
-            bg_color = pygame.Color(0, 0, 0)
-            screen.fill(bg_color)
+
+                #Render and display
+            rain.update(dt) 
+            screen.fill(bg_color)   
             rain.draw(screen)
             pygame.display.flip()
             dt = clock.tick(12)
+        #pygame variable to ensure smooth fps
+        pygame.event.pump()
         pygame.quit()
 
 if __name__ == "__main__":
