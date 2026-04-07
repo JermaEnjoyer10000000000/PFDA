@@ -147,6 +147,11 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+                #create if statement that changes background color
+                #background color changed via user input
+                #elif statement for different background colors tied to different input
+
             #Render and display stuff
             rain.update(dt)
             #background color variable
