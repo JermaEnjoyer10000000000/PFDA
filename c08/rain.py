@@ -156,6 +156,11 @@ def main():
                         if event.key == pygame.K_1:
                             bg_color = pygame.Color(0, 0, 0)
                         elif event.key == pygame.K_2:
+                            bg_color = pygame.Color(50, 0, 0)   
+                        elif event.key == pygame.K_3:
+                            bg_color = pygame.Color(0, 50, 0)
+                        elif event.key == pygame.K_4:
+                            bg_color = pygame.Color(0, 0, 50)
 
 
                 #Render and display
